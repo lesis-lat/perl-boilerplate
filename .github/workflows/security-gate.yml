@@ -1,10 +1,6 @@
 name: Security Gate - LESIS
 
 on:
-  push:
-    branches:
-      - main
-      - develop
   pull_request:
     branches:
       - main
@@ -30,7 +26,7 @@ jobs:
     - name: Pull Docker image from GitHub Container Registry
       run: docker pull ghcr.io/instriq/security-gate/security-gate:latest
 
-    - name: Verify security alerts from dependabot
+    - name: Verify security alerts from GHAS
       run: |
         docker run ghcr.io/instriq/security-gate/security-gate:latest \
         -t "$GITHUB_TOKEN" \
@@ -39,6 +35,6 @@ jobs:
         -h "$MAX_HIGH" \
         -m "$MAX_MEDIUM" \
         -l "$MAX_LOW" \
-        --dependency-alerts
-        --secrets-alerts
+        --dependency-alerts \
+        --secret-alerts \
         --code-alerts
