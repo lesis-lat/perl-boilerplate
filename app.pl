@@ -1,5 +1,7 @@
 #!/usr/bin/env perl
 
+our $VERSION = '0.0.1';
+
 use strict;
 use warnings;
 
