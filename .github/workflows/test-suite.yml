@@ -17,8 +17,7 @@ jobs:
       - name: Setup Perl
         run: |
           sudo apt-get update
-          sudo apt-get install -y perl
-          sudo apt-get install -y cpanminus
+          sudo apt-get install -y perl cpanminus
 
       - name: Install dependencies
         run: sudo cpanm --installdeps --with-test .
@@ -26,3 +25,6 @@ jobs:
       - name: Run tests
         working-directory: ./tests
         run: prove -r
+
+  coverage:
+    uses: ./.github/workflows/test-coverage.yml
