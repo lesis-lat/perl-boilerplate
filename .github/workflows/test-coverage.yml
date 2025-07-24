@@ -8,17 +8,23 @@ jobs:
     runs-on: ubuntu-latest
     container: davorg/perl-coveralls:latest
     name: Test coverage
+
+    defaults:
+      run:
+        working-directory: ./tests
+
     steps:
       - uses: actions/checkout@v4
 
       - name: Install modules
         run: cpanm -n --installdeps .
+        working-directory: ./
 
       - name: Run tests with coverage
-        run: |
-          cd tests
-          PERL5OPT=-MDevel::Cover prove *.t
-          cover
+        run: PERL5OPT=-MDevel::Cover prove *.t
+
+      - name: Generate coverage report
+        run: cover
 
       - name: Total coverage percentage
         run: cover | perl -ne 'print +(split)[-1], "\n" if /^Total\b/'
