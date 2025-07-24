@@ -28,3 +28,12 @@ jobs:
 
   coverage:
     uses: ./.github/workflows/test-coverage.yml
+
+  report-coverage:
+    needs: coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show coverage results
+        run: |
+          echo "Total coverage percentage: ${{ needs.coverage.outputs.coverage_percent }}%"
+          echo "Coverage badge URL: ${{ needs.coverage.outputs.coverage_badge_url }}"
